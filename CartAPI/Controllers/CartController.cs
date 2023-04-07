@@ -18,40 +18,33 @@ namespace CartAPI.Controllers
             this._response = new Response();
         }
 
-        [HttpPost]
-        public async Task<bool> ClearCart(string userId)
+        /*[HttpPost]
+        public async Task<object> ClearCart(string userId)
         {
-            return await _cartRepository.ClearCart(userId);
+            try
+            {
+                Boolean bol = await _cartRepository.ClearCart(userId);
+                _response.IsSuccess = bol;
 
-        }
+            } catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages.Add(ex.Message);
 
-        [HttpGet]
-        [Route("/UpdateCart")]
-        public async Task<object> CreateUpdateCart(Cart cart)
+            }
+            return _response;
+        }*/
+
+        [HttpPost]
+        [Route("/AddCart")]
+        public async Task<object> AddCart(Cart cart)
         {
             try
             {
                 Cart cartDto = await _cartRepository.CreateUpdateCart(cart);
                 _response.Result = cartDto;
 
-            }catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.ErrorMessages = new List<string>() { ex.ToString()};
-            }
-            return _response;
-        }
-
-        [HttpGet]
-        [HttpPost("/GetCart/{userId}")]
-        public async Task<object> GetCartByUserId(string userId)
-        {
-            try
-            {
-                Cart cartDto = await _cartRepository.GetCartByUserId(userId);
-                _response.Result = cartDto;
-
-            }catch (Exception ex)
+            } catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.ErrorMessages = new List<string>() { ex.ToString() };
@@ -60,8 +53,43 @@ namespace CartAPI.Controllers
         }
 
         [HttpPost]
-        [HttpPost("RemoveCart")]
-        public async Task<object> RemoveFromCart(int cartDetailsId)
+        [Route("/UpdateCart")]
+        public async Task<object> UpdateCart(Cart cart)
+        {
+            try
+            {
+                Cart cartDto = await _cartRepository.CreateUpdateCart(cart);
+                _response.Result = cartDto;
+
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
+            }
+            return _response;
+        }
+
+        [HttpGet]
+        [Route("/GetCart/{userId}")]
+        public async Task<object> GetCartByUserId(string userId)
+        {
+            try
+            {
+                Cart cartDto = await _cartRepository.GetCartByUserId(userId);
+                _response.Result = cartDto;
+
+            } catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
+            }
+            return _response;
+        }
+
+        [HttpPost]
+        [Route("/RemoveCart")]
+        public async Task<object> RemoveFromCart([FromBody] int cartDetailsId)
         {
             try
             {

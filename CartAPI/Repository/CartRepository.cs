@@ -14,7 +14,7 @@ namespace CartAPI.Repository
             var cartHeaderFromDb = _context.CartHeaders.FirstOrDefault(x => x.UserId == userId);
             if (cartHeaderFromDb != null)
             {
-                _context.CartDetails.RemoveRange(_context.CartDetails.Where(x => x.CartHeaderId == cartHeaderFromDb.CartHeaderId);
+                _context.CartDetails.RemoveRange(_context.CartDetails.Where(x => x.CartHeaderId == cartHeaderFromDb.CartHeaderId));
                 _context.CartHeaders.Remove(cartHeaderFromDb);
                 await _context.SaveChangesAsync();
                 return true;
