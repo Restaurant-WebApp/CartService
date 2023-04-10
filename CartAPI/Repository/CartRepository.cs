@@ -9,6 +9,11 @@ namespace CartAPI.Repository
     {
         private readonly CartAppDbContext _context;
 
+        public CartRepository(CartAppDbContext context)
+        {
+            _context = context;
+        }
+
         public async Task<bool> ClearCart(string userId)
         {
             var cartHeaderFromDb = _context.CartHeaders.FirstOrDefault(x => x.UserId == userId);

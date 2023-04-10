@@ -1,4 +1,5 @@
-﻿using CartAPI.Model;
+﻿using CartAPI.Messages;
+using CartAPI.Model;
 using CartAPI.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -96,6 +97,28 @@ namespace CartAPI.Controllers
                 Boolean bol = await _cartRepository.RemoveFromCart(cartDetailsId);
                 _response.IsSuccess = bol;
 
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
+            }
+            return _response;
+        }
+
+        [HttpPost]
+        [Route("/Checkout")]
+        public async Task<object> Checkout(CheckoutHeader checkoutHeader)
+        {
+            try
+            {
+               Cart cart = await _cartRepository.GetCartByUserId(checkoutHeader.UserId);
+               if (cart != null)
+                {
+                    return BadRequest();
+                }
+                checkoutHeader.CartDetails = cart.CartDetails;
+                // logic for message brocker
             }
             catch (Exception ex)
             {
