@@ -1,5 +1,8 @@
-﻿namespace CartAPI.Model
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace CartAPI.Model
 {
+    [Keyless]
     public class Cart
     {
         public CartHeader CartHeader { get; set; }
