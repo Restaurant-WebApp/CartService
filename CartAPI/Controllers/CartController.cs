@@ -1,5 +1,6 @@
 ﻿using CartAPI.Messages;
 using CartAPI.Model;
+using CartAPI.RabbitMqSender;
 using CartAPI.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,12 @@ namespace CartAPI.Controllers
     {
         private readonly ICartRepository _cartRepository;
         private Response _response;
-
-        public CartController(ICartRepository cartRepository)
+        private readonly IRabbitMqCartSender _rabbitMqSender;
+        public CartController(ICartRepository cartRepository, IRabbitMqCartSender rabbitMqCartSender)
         {
             _cartRepository = cartRepository;
             this._response = new Response();
+            _rabbitMqSender = rabbitMqCartSender;
         }
 
         /*[HttpPost]
@@ -112,13 +114,17 @@ namespace CartAPI.Controllers
         {
             try
             {
-               Cart cart = await _cartRepository.GetCartByUserId(checkoutHeader.UserId);
-               if (cart != null)
+                Cart cart = await _cartRepository.GetCartByUserId(checkoutHeader.UserId);
+                if (cart != null)
                 {
                     return BadRequest();
                 }
                 checkoutHeader.CartDetails = cart.CartDetails;
-                // logic for message brocker
+
+                // Publish a queue
+                _rabbitMqSender.SendMessage(checkoutHeader, "checkoutqueue");
+                await _cartRepository.ClearCart(checkoutHeader.UserId);
+
             }
             catch (Exception ex)
             {

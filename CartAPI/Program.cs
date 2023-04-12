@@ -1,4 +1,5 @@
 using CartAPI.Data;
+using CartAPI.RabbitMqSender;
 using CartAPI.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<CartAppDbContext>( options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 });
+builder.Services.AddSingleton<IRabbitMqCartSender, RabbitMqCartSender>();
 
 var app = builder.Build();
 
