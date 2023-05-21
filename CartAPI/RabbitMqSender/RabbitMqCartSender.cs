@@ -21,25 +21,41 @@ namespace CartAPI.RabbitMqSender
         }
         public void SendMessage(CheckoutHeader checkoutMessage, string queueName)
         {
-            var factory = new ConnectionFactory
+            if (ConnectionExists())
             {
-                HostName = _hostname,
-                Password = _password,
-                UserName = _username,
-            };
-            _connection = factory.CreateConnection();
-            
-            //creating channel
-            using var channel = _connection.CreateModel();
-            channel.QueueDeclare(queue:queueName, false, false, false, arguments: null);
-            var json = JsonConvert.SerializeObject(checkoutMessage);
-            var body = Encoding.UTF8.GetBytes(json);
-            channel.BasicPublish(exchange: "", routingKey: queueName, basicProperties: null, body: body);
+                using var channel = _connection.CreateModel();
+                channel.QueueDeclare(queue: queueName, false, false, false, arguments: null); //Type of channel
+                var json = JsonConvert.SerializeObject(checkoutMessage);
+                var body = Encoding.UTF8.GetBytes(json);
+                channel.BasicPublish(exchange: "", routingKey: queueName, basicProperties: null, body: body);
+            }           
 
-
-
-
-
+        }
+        private bool ConnectionExists()
+        {
+            if (_connection != null)
+            {
+                return true;
+            }
+            CreateConnection();
+            return _connection != null;
+        }
+        private void CreateConnection()
+        {
+            try
+            {
+                var factory = new ConnectionFactory
+                {
+                    HostName = _hostname,
+                    UserName = _username,
+                    Password = _password
+                };
+                _connection = factory.CreateConnection();
+            }
+            catch (Exception)
+            {
+                //log exception
+            }
         }
     }
 }

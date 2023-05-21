@@ -114,12 +114,12 @@ namespace CartAPI.Controllers
         {
             try
             {
-                Cart cart = await _cartRepository.GetCartByUserId(checkoutHeader.UserId);
+                /*Cart cart = await _cartRepository.GetCartByUserId(checkoutHeader.UserId);
                 if (cart != null)
                 {
                     return BadRequest();
                 }
-                checkoutHeader.CartDetails = cart.CartDetails;
+                checkoutHeader.CartDetails = cart.CartDetails;*/
 
                 // Publish a queue
                 _rabbitMqSender.SendMessage(checkoutHeader, "checkoutqueue");
