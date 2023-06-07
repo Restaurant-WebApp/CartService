@@ -19,6 +19,15 @@ builder.Services.AddDbContext<CartAppDbContext>( options =>
 
 });
 builder.Services.AddSingleton<IRabbitMqCartSender, RabbitMqCartSender>();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:3000") // Add your frontend's origin here
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -32,6 +41,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseCors();
 
 app.MapControllers();
 

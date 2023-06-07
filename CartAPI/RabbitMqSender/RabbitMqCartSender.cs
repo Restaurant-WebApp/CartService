@@ -13,11 +13,12 @@ namespace CartAPI.RabbitMqSender
         private readonly string _username;
         private  IConnection _connection;
 
-        public RabbitMqCartSender()
+        public RabbitMqCartSender(IConfiguration configuration)
         {
-            _hostname = "Localhost";
-            _password = "guest";
-            _username = "guest";
+            var rabbitMqSettings = configuration.GetSection("RabbitMQSettings");
+            _hostname = rabbitMqSettings["HostName"];
+            _password = rabbitMqSettings["Password"];
+            _username = rabbitMqSettings["UserName"];
         }
         public void SendMessage(CheckoutHeader checkoutMessage, string queueName)
         {

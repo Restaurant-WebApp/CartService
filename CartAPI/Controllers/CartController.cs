@@ -121,6 +121,12 @@ namespace CartAPI.Controllers
                 }
                 checkoutHeader.CartDetails = cart.CartDetails;*/
 
+                if(checkoutHeader.Email == null)
+                {
+                    _response.IsSuccess=false;
+                    _response.ErrorMessages = new List<string>() { "The email adress cannot be null" };
+                }
+
                 // Publish a queue
                 _rabbitMqSender.SendMessage(checkoutHeader, "checkoutqueue");
                 await _cartRepository.ClearCart(checkoutHeader.UserId);
