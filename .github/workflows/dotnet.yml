@@ -26,6 +26,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Build the Docker image
-        run: docker build . --file ./CartAPI/Dockerfile --tag raison1311/cartapi
+        run: docker build --file ./CartAPI/Dockerfile --tag raison1311/cartapi
       - name: Docker Push
         run: docker push ${{secrets.DOCKER_USERNAME}}/restaurant-microservices
