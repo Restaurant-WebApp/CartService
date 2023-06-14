@@ -31,4 +31,4 @@ jobs:
           context: ./CartAPI
           file: ./CartAPI/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/restaurant-microservices:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/restaurant-cartapi:latest
