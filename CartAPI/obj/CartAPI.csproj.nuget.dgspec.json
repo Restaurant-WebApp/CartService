@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Fontys\\Individual-Project\\CartAPI\\CartAPI.csproj": {}
+    "C:\\Users\\Nares\\Desktop\\Res-Microservice\\Cart\\CartService\\CartAPI\\CartAPI.csproj": {}
   },
   "projects": {
-    "D:\\Fontys\\Individual-Project\\CartAPI\\CartAPI.csproj": {
+    "C:\\Users\\Nares\\Desktop\\Res-Microservice\\Cart\\CartService\\CartAPI\\CartAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Fontys\\Individual-Project\\CartAPI\\CartAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Nares\\Desktop\\Res-Microservice\\Cart\\CartService\\CartAPI\\CartAPI.csproj",
         "projectName": "CartAPI",
-        "projectPath": "D:\\Fontys\\Individual-Project\\CartAPI\\CartAPI.csproj",
+        "projectPath": "C:\\Users\\Nares\\Desktop\\Res-Microservice\\Cart\\CartService\\CartAPI\\CartAPI.csproj",
         "packagesPath": "C:\\Users\\Nares\\.nuget\\packages\\",
-        "outputPath": "D:\\Fontys\\Individual-Project\\CartAPI\\obj\\",
+        "outputPath": "C:\\Users\\Nares\\Desktop\\Res-Microservice\\Cart\\CartService\\CartAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nares\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -40,17 +41,67 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "AspNetCore.HealthChecks": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "AspNetCore.HealthChecks.Rabbitmq": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "MassTransit": {
+              "target": "Package",
+              "version": "[8.0.16, )"
+            },
+            "MassTransit.AspNetCore": {
+              "target": "Package",
+              "version": "[7.3.1, )"
+            },
+            "MassTransit.RabbitMQ": {
+              "target": "Package",
+              "version": "[8.0.16, )"
+            },
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[7.0.4, )"
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.5, )"
             },
             "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
               "target": "Package",
-              "version": "[1.17.2, )"
+              "version": "[1.18.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.5.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.4.0, )"
+              "version": "[6.5.0, )"
+            },
+            "System.Diagnostics.Tools": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             }
           },
           "imports": [
@@ -72,7 +123,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
