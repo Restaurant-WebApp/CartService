@@ -90,7 +90,7 @@ namespace CartAPI.Repository
             return cart;
         }
 
-        public async Task<bool> RemoveFromCart(int cartDetailsId)
+        public async Task<bool> RemoveFromCart(Guid cartDetailsId)
         {
             try
             {

@@ -6,7 +6,7 @@ namespace CartAPI.Repository
     {
         Task<Cart> GetCartByUserId(string userId);
         Task<Cart> CreateUpdateCart(Cart cart);
-        Task<bool> RemoveFromCart(int cartDetailsId);
+        Task<bool> RemoveFromCart(Guid cartDetailsId);
         Task<bool> ClearCart(string userId);
 
     }

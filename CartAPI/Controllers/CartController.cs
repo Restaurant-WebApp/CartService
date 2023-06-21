@@ -21,23 +21,6 @@ namespace CartAPI.Controllers
             _rabbitMqSender = rabbitMqCartSender;
         }
 
-        /*[HttpPost]
-        public async Task<object> ClearCart(string userId)
-        {
-            try
-            {
-                Boolean bol = await _cartRepository.ClearCart(userId);
-                _response.IsSuccess = bol;
-
-            } catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.ErrorMessages.Add(ex.Message);
-
-            }
-            return _response;
-        }*/
-
         [HttpPost]
         [Route("/AddCart")]
         public async Task<object> AddCart(Cart cart)
@@ -92,7 +75,7 @@ namespace CartAPI.Controllers
 
         [HttpPost]
         [Route("/RemoveCart")]
-        public async Task<object> RemoveFromCart([FromBody] int cartDetailsId)
+        public async Task<object> RemoveFromCart([FromBody] Guid cartDetailsId)
         {
             try
             {
@@ -114,19 +97,18 @@ namespace CartAPI.Controllers
         {
             try
             {
-                /*Cart cart = await _cartRepository.GetCartByUserId(checkoutHeader.UserId);
-                if (cart != null)
-                {
-                    return BadRequest();
-                }
-                checkoutHeader.CartDetails = cart.CartDetails;*/
+                // Generate a new GUID for CartHeaderId
+                checkoutHeader.CartHeaderId = Guid.NewGuid();
 
-                if(checkoutHeader.Email == null)
+                if (checkoutHeader.Email == null)
                 {
                     _response.IsSuccess=false;
                     _response.ErrorMessages = new List<string>() { "The email adress cannot be null" };
                 }
-
+                foreach (var cartDetail in checkoutHeader.CartDetails)
+                {
+                    cartDetail.CartDetailsId = Guid.NewGuid();
+                }
                 // Publish a queue
                 _rabbitMqSender.SendMessage(checkoutHeader, "checkoutqueue");
                 await _cartRepository.ClearCart(checkoutHeader.UserId);
